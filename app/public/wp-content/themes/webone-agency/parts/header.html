@@ -1,0 +1,108 @@
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"1rem","bottom":"1rem","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}},"position":{"type":"sticky","top":"0px"}},"backgroundColor":"base","className":"wa-header wa-header-sticky","layout":{"type":"constrained","contentSize":"1340px"}} -->
+<div class="wp-block-group alignfull wa-header wa-header-sticky has-base-background-color has-background"
+    style="margin-top:0;margin-bottom:0;padding-top:1rem;padding-right:var(--wp--preset--spacing--50);padding-bottom:1rem;padding-left:var(--wp--preset--spacing--50)">
+
+    <!-- wp:html -->
+    <div class="wa-nav-container">
+        <!-- Logo Section -->
+        <div class="wa-nav-brand">
+            <div class="wa-logo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="wa-site-title">Webone Consultency</span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="wa-nav-desktop">
+            <a href="#services" class="wa-nav-link">Services</a>
+            <a href="#portfolio" class="wa-nav-link">Portfolio</a>
+            <a href="#team" class="wa-nav-link">Team</a>
+            <a href="#contact" class="wa-nav-link">Contact</a>
+            <a href="#contact" class="wa-nav-cta">Start Project</a>
+        </nav>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="wa-mobile-toggle" aria-label="Open Menu" onclick="openMobileMenu()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Create and append mobile menu directly to body on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if menu already exists
+            if (document.getElementById('waMobileMenu')) return;
+
+            // Create the mobile menu element
+            const mobileMenu = document.createElement('div');
+            mobileMenu.id = 'waMobileMenu';
+            mobileMenu.className = 'wa-mobile-menu';
+            mobileMenu.innerHTML = `
+                <div class="wa-mobile-header">
+                    <div class="wa-mobile-brand">
+                        <div class="wa-logo-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="wa-mobile-title">Webone Consultency</span>
+                    </div>
+                    <button class="wa-mobile-close" aria-label="Close Menu" onclick="closeMobileMenu()">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="wa-mobile-menu-content">
+                    <a href="#services" class="wa-mobile-link" onclick="closeMobileMenu()">Services</a>
+                    <a href="#portfolio" class="wa-mobile-link" onclick="closeMobileMenu()">Portfolio</a>
+                    <a href="#team" class="wa-mobile-link" onclick="closeMobileMenu()">Team</a>
+                    <a href="#contact" class="wa-mobile-link" onclick="closeMobileMenu()">Contact</a>
+                    <a href="#contact" class="wa-mobile-cta" onclick="closeMobileMenu()">Start Project</a>
+                </div>
+            `;
+
+            // Append directly to body
+            document.body.appendChild(mobileMenu);
+        });
+
+        function openMobileMenu() {
+            const menu = document.getElementById('waMobileMenu');
+            const body = document.body;
+
+            if (menu) {
+                menu.classList.add('is-open');
+                body.classList.add('mobile-menu-open');
+                body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('waMobileMenu');
+            const body = document.body;
+
+            if (menu) {
+                menu.classList.remove('is-open');
+                body.classList.remove('mobile-menu-open');
+                body.style.overflow = '';
+            }
+        }
+    </script>
+    <!-- /wp:html -->
+
+</div>
+<!-- /wp:group -->
