@@ -21,16 +21,17 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'local' );
+define( 'DB_NAME', getenv( 'MYSQLDATABASE' ) ?: getenv( 'DB_NAME' ) ?: 'local' );
 
 /** Database username */
-define( 'DB_USER', 'root' );
+define( 'DB_USER', getenv( 'MYSQLUSER' ) ?: getenv( 'DB_USER' ) ?: 'root' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'root' );
+define( 'DB_PASSWORD', getenv( 'MYSQLPASSWORD' ) ?: getenv( 'DB_PASSWORD' ) ?: 'root' );
 
 /** Database hostname */
-define( 'DB_HOST', 'localhost' );
+define( 'DB_HOST', ( getenv( 'MYSQLHOST' ) ?: getenv( 'DB_HOST' ) ?: 'localhost' )
+    . ( getenv( 'MYSQLPORT' ) && getenv( 'MYSQLPORT' ) !== '3306' ? ':' . getenv( 'MYSQLPORT' ) : '' ) );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -73,6 +74,12 @@ $table_prefix = 'wp_';
 
 /* Add any custom values between this line and the "stop editing" line. */
 
+// Railway / production site URL (set WP_HOME env var in Railway dashboard)
+if ( getenv( 'WP_HOME' ) ) {
+	define( 'WP_HOME', getenv( 'WP_HOME' ) );
+	define( 'WP_SITEURL', getenv( 'WP_HOME' ) );
+}
+
 
 
 /**
@@ -91,7 +98,7 @@ if ( ! defined( 'WP_DEBUG' ) ) {
 	define( 'WP_DEBUG', false );
 }
 
-define( 'WP_ENVIRONMENT_TYPE', 'local' );
+define( 'WP_ENVIRONMENT_TYPE', getenv( 'WP_ENVIRONMENT_TYPE' ) ?: 'production' );
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

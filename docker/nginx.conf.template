@@ -1,0 +1,57 @@
+worker_processes auto;
+error_log /var/log/nginx/error.log warn;
+pid /tmp/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    client_max_body_size 100M;
+    sendfile on;
+    keepalive_timeout 65;
+
+    fastcgi_buffers 32 32k;
+    fastcgi_buffer_size 32k;
+    fastcgi_read_timeout 300s;
+
+    server {
+        listen ${PORT};
+        root /var/www/html;
+        index index.php index.html;
+
+        # WordPress permalinks
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+
+        # PHP-FPM
+        location ~ \.php$ {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+            fastcgi_param HTTPS on;
+        }
+
+        # Security
+        location ~ /\.ht { deny all; }
+        location ~ /\.git { deny all; }
+        location = /wp-config.php { deny all; }
+
+        # Static assets cache
+        location ~* \.(css|gif|ico|jpeg|jpg|js|png|svg|woff|woff2|ttf|eot)$ {
+            expires 7d;
+            log_not_found off;
+        }
+
+        location = /favicon.ico { log_not_found off; access_log off; }
+        location = /robots.txt  { log_not_found off; access_log off; allow all; }
+    }
+}
